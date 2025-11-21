@@ -20,6 +20,8 @@ create_symlinks() {
 
 create_symlinks
 
+for i in $(cat pkglist); do sudo apt-get install -y $i; done
+
 
 mkdir -p "$HOME/bin"
 wget https://github.com/atuinsh/atuin/releases/latest/download/atuin-x86_64-unknown-linux-gnu.tar.gz
@@ -38,5 +40,4 @@ printf "%s" "$ATUIN_KEY" > "$HOME/.atuin_key"
 
 unset ATUIN_KEY
 
-pip install git-machete
 git config machete.github.forceDescriptionFromCommitMessage true
