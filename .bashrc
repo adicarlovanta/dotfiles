@@ -155,5 +155,3 @@ export ATUIN_HOST_USER=$GITHUB_USER
 
 source "$HOME/.local/share/blesh/ble.sh"
 eval "$(atuin init bash)"
-
-eval "$(git machete completion bash)"
