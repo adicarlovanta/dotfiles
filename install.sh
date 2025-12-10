@@ -1,8 +1,10 @@
 #!/bin/bash
 
+
+# Get the directory in which this script lives.
+script_dir=$(dirname "$(readlink -f "$0")")
+
 create_symlinks() {
-    # Get the directory in which this script lives.
-    script_dir=$(dirname "$(readlink -f "$0")")
 
     # Get a list of all files in this directory that start with a dot.
     files=$(find -maxdepth 1 -type f -name ".*")
@@ -17,6 +19,13 @@ create_symlinks() {
 
     ln -s "$script_dir/.config/atuin" "$HOME/.config/atuin"
 }
+
+# Appropriately handle updating or linking the bashrc file.
+if [[ -f "$HOME/.bashrc" ]]; then
+    cat "$script_dir/template.bashrc" >> "$HOME/.bashrc"
+else 
+    cp "$script_dir/template.bashrc" "$script_dir/.bashrc"
+fi
 
 create_symlinks
 
@@ -40,4 +49,3 @@ printf "%s" "$ATUIN_KEY" > "$HOME/.atuin_key"
 
 unset ATUIN_KEY
 
-git config machete.github.forceDescriptionFromCommitMessage true
