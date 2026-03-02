@@ -7,35 +7,25 @@ script_dir=$(dirname "$(readlink -f "$0")")
 create_symlinks() {
 
     # Get a list of all files in this directory that start with a dot.
-    files=$(find -maxdepth 1 -type f -name ".*")
+    files=$(find . -maxdepth 1 -type f -name ".*")
 
     # Create a symbolic link to each file in the home directory.
     for file in $files; do
-        name=$(basename $file)
+        name=$(basename "$file")
         echo "Creating symlink to $name in home directory."
-        rm -rf ~/$name
-        ln -s $script_dir/$name ~/$name
+        cat "$script_dir/$name" >> "$HOME/$name"
     done
 
-    ln -s "$script_dir/.config/atuin" "$HOME/.config/atuin"
 }
 
-# Appropriately handle updating or linking the bashrc file.
-if [[ -f "$HOME/.bashrc" ]]; then
-    cat "$script_dir/template.bashrc" >> "$HOME/.bashrc"
-else 
-    cp "$script_dir/template.bashrc" "$script_dir/.bashrc"
-fi
+cat "$script_dir/template.bashrc" >> "$HOME/.bashrc"
 
 create_symlinks
 
-for i in $(cat pkglist); do sudo apt-get install -y $i; done
-
-
-mkdir -p "$HOME/bin"
-wget https://github.com/atuinsh/atuin/releases/latest/download/atuin-x86_64-unknown-linux-gnu.tar.gz
-tar xvf atuin-x86_64-unknown-linux-gnu.tar.gz
-cp atuin-x86_64-unknown-linux-gnu/atuin "$HOME/bin/atuin"
+while read -r line; do
+    echo "Installing package: $line"
+    sudo apt-get install -y "$line"
+done < pkglist
 
 wget https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz 
 tar xvf ble-nightly.tar.xz
@@ -44,8 +34,5 @@ bash ble-nightly/ble.sh --install "$HOME/.local/share/"
 
 bash "$HOME"/.local/share/blesh/ble.sh --update 
 
-printf "%s" "$ATUIN_SESSION" > "$HOME/.atuin_session"
-printf "%s" "$ATUIN_KEY" > "$HOME/.atuin_key"
 
-unset ATUIN_KEY
 
