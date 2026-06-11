@@ -34,5 +34,5 @@ bash ble-nightly/ble.sh --install "$HOME/.local/share/"
 
 bash "$HOME"/.local/share/blesh/ble.sh --update 
 
-
+just enable-claude-plugin issue-management
 
