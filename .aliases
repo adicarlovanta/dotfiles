@@ -20,3 +20,5 @@ alias stash-unstaged="git stash push --keep-index -u"
 
 # work-specific
 alias main-sync="git switch main && git pull origin main && just pp"
+
+alias cc="caveman claude --settings $HOME/dotfiles/.claude/settings.local.json"

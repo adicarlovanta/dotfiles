@@ -152,3 +152,4 @@ export PATH="$PATH:$HOME/bin"
 
 
 source "$HOME/.local/share/blesh/ble.sh"
+source "$HOME/.aliases"

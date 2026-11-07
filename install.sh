@@ -15,7 +15,8 @@ create_symlinks() {
         echo "Creating symlink to $name in home directory."
         cat "$script_dir/$name" >> "$HOME/$name"
     done
-
+    
+    ln -sf $HOME/.claude/settings.local.json /workspaces/obsidian/.claude/settings.local.json
 }
 
 cat "$script_dir/template.bashrc" >> "$HOME/.bashrc"
