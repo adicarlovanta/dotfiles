@@ -34,5 +34,9 @@ bash ble-nightly/ble.sh --install "$HOME/.local/share/"
 
 bash "$HOME"/.local/share/blesh/ble.sh --update 
 
-just enable-claude-plugin issue-management
+claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman
+pnpm install -g @caveman-ai/cli
 
+
+just enable-claude-plugin issue-management
+just enable-claude-plugin caveman
