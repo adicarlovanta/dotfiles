@@ -40,4 +40,3 @@ npm install -g @caveman-ai/cli
 
 
 just enable-claude-plugin issue-management
-just enable-claude-plugin caveman
