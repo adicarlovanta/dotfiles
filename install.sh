@@ -4,24 +4,25 @@
 # Get the directory in which this script lives.
 script_dir=$(dirname "$(readlink -f "$0")")
 
-create_symlinks() {
+write_files() {
 
     # Get a list of all files in this directory that start with a dot.
     files=$(find . -maxdepth 1 -type f -name ".*")
 
-    # Create a symbolic link to each file in the home directory.
+    # Add the contents of each dotfile to the corresponding file in the home directory.
+    # Use a >> to append the contents rather than overwriting existing files.
     for file in $files; do
         name=$(basename "$file")
         echo "Creating symlink to $name in home directory."
         cat "$script_dir/$name" >> "$HOME/$name"
     done
-    
-    ln -sf $HOME/.claude/settings.local.json /workspaces/obsidian/.claude/settings.local.json
 }
 
 cat "$script_dir/template.bashrc" >> "$HOME/.bashrc"
+cat "$script_dir/.claude/settings.local.json" >> "$HOME/.claude/settings.local.json"
+ln -sf "$HOME/.claude/settings.local.json" /workspaces/obsidian/.claude/settings.local.json
 
-create_symlinks
+write_files
 
 while read -r line; do
     echo "Installing package: $line"
